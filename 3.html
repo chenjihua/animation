@@ -17,7 +17,9 @@
 </head>
 
 <body>
-    <div id="scroll-images">
+    <!-- 外包的div要进行一定的设置 -->
+    <!-- height:480px;width:480px;position: relative;left:300px;overflow:hidden; -->
+    <div id="scroll-images" style="background-color:#888;height:480px;width:480px;position: relative;left:300px;overflow:hidden;">
         <img src="image/jcase_item_00.jpg" alt="">
         <img src="image/jcase_item_01.jpg" alt="">
         <img src="image/jcase_item_02.jpg" alt="">
@@ -35,11 +37,13 @@
     <script>
         var index = 11;
         var z_index = 999;
+        //翻页函数
         function job1() {
-            $($("#scroll-images img")[index]).fadeOut(3000, function(){
+            $($("#scroll-images img")[index]).animate({left: "-480px"},600, function(){
                 z_index = z_index -1;
-                $(this).css({zIndex: z_index});
-                $(this).show();
+
+                // 将移走的图片恢复到原来的位置，以便下次移动
+                $(this).css({zIndex: z_index, left:0});
                 index = index -1;
                 if (index < 0) {
                     index = 11;
@@ -52,8 +56,9 @@
             for (var i = 0; i < $images.length; i++){
                 $($images[i]).css({top: -i*480 + 'px', zIndex:999});
             }
-
-            setInterval(job1, 4000);
+            
+            // 定时调用翻页的函数，目前是1000ms
+            setInterval(job1, 1000);
         })
     </script>
 </body>
